@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
+const cors = require('cors');
 
 const app = express();
 
@@ -11,6 +12,7 @@ const db = mysql.createConnection({
 });
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/',(req,res)=>{
     res.json("hello this is backend");
@@ -25,10 +27,11 @@ app.get('/books',(req,res)=>{
 });
 
 app.post('/books',(req,res)=>{
-    const q = "INSERT INTO books (`title`,`desc`,`cover`) VALUES (?)";
+    const q = "INSERT INTO books (`title`,`desc`,`price`,`cover`) VALUES (?)";
     const values = [
         req.body.title,
         req.body.desc,
+        req.body.price,
         req.body.cover
     ];
 
